@@ -21,7 +21,7 @@ chomp($user_id);
 
 my $command = shift @ARGV || 'list';
 
-my $user = moco('User')->find(id => $user_id) || moco('User')->create(id => $user_id, name => 'takapiero');
+my $user = moco('User')->find(id => $user_id) || moco('User')->create(id => $user_id, name => $user_id . "san");
 
 my $handler = $HANDLERS{ $command };
 
@@ -32,7 +32,10 @@ exit 0;
 sub add_entry {
     my ($user, $title, $body) = @_;
 
-    my $entry = $user->add_entry($title, $body);
+    my $entry = $user->add_entry({
+        title => $title,
+        body  => $body,
+    });
     print "entry\ntitle: " . $entry->title . "\n" . 'body:' . $entry->body . "\n";
 }
 
@@ -51,12 +54,12 @@ sub show_entries {
 sub edit_entry {
     my ($user, $entry_id, $title, $body) = @_;
 
-    my $entry = moco('Entry')->find(
-        id         => $entry_id,
-        is_deleted => 0
-    );
-    $entry->edit($title, $body);
-    print "entry\ntitle: " . $entry->title . "\n" . 'body:' . $entry->body . "\n";
+    my $entry = $user->edit_entry({
+        entry_id => $entry_id,
+        title    => $title,
+        body     => $body
+    });
+    print "edit:\ntitle: " . $entry->title . "\n" . 'body:' . $entry->body . "\n";
 }
 
 sub remove_entry {
