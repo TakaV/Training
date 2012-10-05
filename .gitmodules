@@ -1,3 +1,6 @@
 [submodule "Intern-Diary/modules/DBIx-MoCo"]
 	path = Intern-Diary/modules/DBIx-MoCo
 	url = git://github.com/hatena/DBIx-MoCo.git
+[submodule "Intern-Diary/modules/Ridge"]
+	path = Intern-Diary/modules/Ridge
+	url = git://github.com/hatena/Ridge.git
