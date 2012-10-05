@@ -12,10 +12,10 @@ __PACKAGE__->table('entry');
 __PACKAGE__->utf8_columns(qw(title body));
 
 sub edit {
-    my ($self, $title, $body) = @_;
+    my ($self, $args) = @_;
 
-    $self->title($title);
-    $self->body($body);
+    $self->title($args->{title}) if defined $args->{title} && $args->{title} ne '';
+    $self->body($args->{body}) if defined $args->{body} && $args->{body} ne "";
 }
 
 sub soft_delete {

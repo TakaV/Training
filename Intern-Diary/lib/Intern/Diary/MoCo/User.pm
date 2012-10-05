@@ -11,12 +11,6 @@ __PACKAGE__->table('user');
 
 __PACKAGE__->utf8_columns(qw(name));
 
-# __PACKAGE__->has_many(
-#     entries => 'Intern::Diary::MoCo::Entry', {
-#         key => { id => 'user_id' }
-#     }
-# );
-
 sub entries {
     my $self = shift;
 
@@ -51,10 +45,16 @@ sub edit_entry {
 
     my $entry = moco('Entry')->find(
         id         => $entry_id,
+        user_id    => $self->id,
         is_deleted => 0
     );
 
-    $entry->edit($title, $body);
+    return undef if !$entry;
+
+    $entry->edit({
+        title => $title,
+        body  => $body,
+    });
 
     return $entry;
 }
@@ -62,7 +62,14 @@ sub edit_entry {
 sub remove_entry {
     my ($self, $entry_id) = @_;
 
-    my $entry = moco('Entry')->find(id => $entry_id);
+    my $entry = moco('Entry')->find(
+        id         => $entry_id,
+        user_id    => $self->id,
+        is_deleted => 0
+    );
+
+    return undef if !$entry;
+
     $entry->soft_delete;
 }
 
