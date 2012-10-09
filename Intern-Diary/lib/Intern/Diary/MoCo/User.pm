@@ -12,13 +12,20 @@ __PACKAGE__->table('user');
 __PACKAGE__->utf8_columns(qw(name));
 
 sub entries {
-    my $self = shift;
+    my ($self, $opts) = @_;
 
-    moco('Entry')->search(
+    my $page   = $opts->{page} || 1;
+    my $limit  = $opts->{limit} || 3;
+    my $offset = ($page - 1) * $limit;
+
+    return moco('Entry')->search(
         where => {
             user_id    => $self->id,
             is_deleted => 0,
         },
+        limit  => $limit,
+        offset => $offset,
+        order  => 'id DESC',
     );
 }
 

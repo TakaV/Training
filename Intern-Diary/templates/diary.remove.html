@@ -1,0 +1,23 @@
+<form action="/diary.remove" method="post">
+  <p>本当に削除しますか?</p>
+  <table>
+    <tr>
+      <th><label for="title">タイトル</label></th>
+      <td>
+        [% entry.title | html %]
+      </td>
+    </tr>
+    <tr>
+      <th><label for="body">内容</label></th>
+      <td>
+        [% entry.body | html %]
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="submit">
+        <input type="submit" value="削除"/>
+        <input type="hidden" name="entry_id" value="[% entry.id | html %]"/>
+      </td>
+    </tr>
+  </table>
+</form>

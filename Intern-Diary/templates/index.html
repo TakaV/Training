@@ -1,0 +1,13 @@
+[% IF entries.size %]
+  [% FOR entry IN entries %]
+    <a href="/diary/[% entry.id | html %]">[% entry.title | html %]</a>
+    <p>[% entry.body | html %]</p>
+  [% END %]
+[% ELSE %]
+<p>日記がまだありません</p>
+[% END %]
+<div>
+  <p>
+    <a href="/diary.add">日記を書く</a>
+  </p>
+</div>

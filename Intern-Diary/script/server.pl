@@ -11,6 +11,8 @@ use Getopt::Long;
 use Pod::Usage;
 use Plack::Runner;
 
+use Devel::KYTProf;
+
 my $help    = 0;
 my $port    = 3000;
 my $fast    = 0;

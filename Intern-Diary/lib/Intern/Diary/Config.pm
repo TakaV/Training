@@ -33,7 +33,13 @@ __PACKAGE__->setup({
 sub uri_filter {
     my $uri = shift;
     my $path = $uri->path;
-    $uri;
+
+    if ($path =~ m{^/diary/(\d+)$}) {
+        $uri->path('/diary');
+        $uri->param( id => $1 );
+    }
+
+    return $uri;
 }
 
 1;
