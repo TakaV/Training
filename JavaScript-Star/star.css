@@ -1,0 +1,25 @@
+body {
+    background-color:#000000;
+}
+p {
+    color:FFFFFF;
+}
+.star {
+    color:#FF1493;
+    position:absolute;
+}
+#star1 {
+    font-size:30px;
+}
+#star2 {
+    font-size:25px;
+}
+#star3 {
+    font-size:20px;
+}
+#star4 {
+    font-size:15px;
+}
+#star5 {
+    font-size:10px;
+}

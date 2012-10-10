@@ -1,10 +1,10 @@
 var nextPage = $('#next-page').text();
 
-var getPager = function (event) {
+var getPager = function(event) {
     var url = '/api.page/' + nextPage;
 
     if (nextPage > 1) {
-        $.get(url).done(function (res) {
+        $.get(url).done(function(res) {
             for (var i = 0; i < res.data.length; ++i) {
                 var data = res.data[i];
 

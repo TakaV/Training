@@ -15,3 +15,6 @@ nytprof.out
 pm_to_blib
 
 */tmp/*
+
+.DS_Store
+Thumbs.db
