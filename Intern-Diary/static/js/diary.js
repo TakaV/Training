@@ -1,4 +1,4 @@
-var nextPage = document.getElementById('next-page').text;
+var nextPage = $('#next-page').text();
 
 var getPager = function (event) {
     var url = '/api.page/' + nextPage;
