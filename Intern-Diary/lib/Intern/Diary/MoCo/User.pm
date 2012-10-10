@@ -14,8 +14,8 @@ __PACKAGE__->utf8_columns(qw(name));
 sub entries {
     my ($self, $opts) = @_;
 
-    my $page   = $opts->{page} || 1;
-    my $limit  = $opts->{limit} || 3;
+    my $page   = $opts->{page};
+    my $limit  = $opts->{limit};
     my $offset = ($page - 1) * $limit;
 
     return moco('Entry')->search(

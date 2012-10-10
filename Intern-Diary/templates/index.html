@@ -1,11 +1,16 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script id="next-page" src="/js/diary.js">[% next_page | html %]</script>
+<div id="diary-list">
 [% IF entries.size %]
   [% FOR entry IN entries %]
     <a href="/diary/[% entry.id | html %]">[% entry.title | html %]</a>
-    <p>[% entry.body | html %]</p>
+    <div>[% entry.body | html %]</div>
   [% END %]
 [% ELSE %]
 <p>日記がまだありません</p>
 [% END %]
+</div>
 <div>
   <p>
     <a href="/diary.add">日記を書く</a>

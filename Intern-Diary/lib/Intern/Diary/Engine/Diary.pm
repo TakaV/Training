@@ -10,7 +10,10 @@ sub default : Public {
     my ($self, $r) = @_;
 
     my $id    = $r->req->uri->param('id');
-    my $entry = moco("Entry")->find( id => $id );
+    my $entry = moco("Entry")->find(
+        id         => $id,
+        is_deleted => 0
+    );
 
     $r->stash->param(
         entry => $entry,
