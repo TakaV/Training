@@ -20,7 +20,7 @@ sub new {
 sub name {
     my ($self, $name) = @_;
     $self->{name} = $name if defined $name;
-    return $self->{name};
+    $self->{name};
 }
 sub follows {
     my ($self, $follows) = @_;
@@ -140,7 +140,7 @@ sub _receive_tweet {
 
 sub _has_bird {
     my ($self, $bird, $method_name) = @_;
-    return scalar(grep { $bird->name eq $_->name } @{ $self->$method_name }) > 0;
+    scalar(grep { $bird->name eq $_->name } @{ $self->$method_name }) > 0;
 }
 
 1;

@@ -13,10 +13,14 @@ sub new {
 };
 
 sub bird {
-    shift->{bird};
+    my ($self, $bird) = @_;
+    $self->{bird} = $bird if $bird;
+    $self->{bird};
 }
 sub message {
-    shift->{message};
+    my ($self, $message) = @_;
+    $self->{message} = $message if defined $message;
+    $self->{message};
 }
 
 1;
