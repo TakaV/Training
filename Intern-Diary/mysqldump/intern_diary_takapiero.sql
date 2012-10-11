@@ -28,11 +28,11 @@ CREATE TABLE `entry` (
   `title` varbinary(255) NOT NULL,
   `body` blob NOT NULL,
   `is_deleted` tinyint(4) NOT NULL,
-  `created_on` datetime NOT NULL,
-  `updated_on` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`,`created_on`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  KEY `user_id` (`user_id`,`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `entry` (
 
 LOCK TABLES `entry` WRITE;
 /*!40000 ALTER TABLE `entry` DISABLE KEYS */;
-INSERT INTO `entry` VALUES (1,1,'sample','text',1,'2012-10-05 08:03:13','2012-10-05 08:08:58'),(2,1,'タイトル2','テキストテキスト2',0,'2012-10-05 08:03:48','2012-10-05 08:03:48');
+INSERT INTO `entry` VALUES (1,1,'aaa','テキスト',0,'2012-10-10 12:25:54','2012-10-10 12:26:43'),(2,1,'2','テキスト',1,'2012-10-10 12:26:03','2012-10-10 12:26:53'),(3,1,'3','テキスト',0,'2012-10-10 12:27:00','2012-10-10 12:27:00'),(4,1,'4','テキスト',0,'2012-10-10 12:27:07','2012-10-10 12:27:07'),(5,1,'5','テキスト',0,'2012-10-10 12:27:13','2012-10-10 12:27:13');
 /*!40000 ALTER TABLE `entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varbinary(32) NOT NULL,
-  `created_on` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -67,7 +67,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'takapiero','2012-10-05 08:02:57');
+INSERT INTO `user` VALUES (1,'takapiero','2012-10-10 12:25:35');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -80,4 +80,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-05 17:15:21
+-- Dump completed on 2012-10-10 21:28:42

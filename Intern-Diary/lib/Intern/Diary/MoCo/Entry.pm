@@ -13,7 +13,7 @@ __PACKAGE__->utf8_columns(qw(title body));
 
 sub user {
     my $self = shift;
-    return moco('User')->find( id => $self->user_id );
+    moco('User')->find( id => $self->user_id );
 }
 
 sub edit {

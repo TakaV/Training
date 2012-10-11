@@ -1,7 +1,7 @@
 CREATE TABLE user (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARBINARY(32) NOT NULL,
-    created_on DATETIME NOT NULL,
+    created_at DATETIME NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY (name)
 );
@@ -12,8 +12,8 @@ CREATE TABLE entry (
     title VARBINARY(255) NOT NULL,
     body BLOB NOT NULL,
     is_deleted TINYINT NOT NULL,
-    created_on DATETIME NOT NULL,
-    updated_on DATETIME NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
     PRIMARY KEY (id),
-    KEY (user_id, created_on)
+    KEY (user_id, is_deleted)
 );

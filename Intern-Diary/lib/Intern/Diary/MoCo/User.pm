@@ -14,18 +14,24 @@ __PACKAGE__->utf8_columns(qw(name));
 sub entries {
     my ($self, $opts) = @_;
 
-    my $page   = $opts->{page};
-    my $limit  = $opts->{limit};
-    my $offset = ($page - 1) * $limit;
+    my $attrs = {
+        order => 'id DESC',
+    };
 
-    return moco('Entry')->search(
+    if ($opts) {
+        my $page  = $opts->{page} || 1;
+        my $limit = $opts->{limit} || 3;
+
+        $attrs->{limit}  = $limit;
+        $attrs->{offset} = ($page - 1) * $limit;
+    }
+
+    moco('Entry')->search(
         where => {
             user_id    => $self->id,
             is_deleted => 0,
         },
-        limit  => $limit,
-        offset => $offset,
-        order  => 'id DESC',
+        %$attrs
     );
 }
 
@@ -56,14 +62,14 @@ sub edit_entry {
         is_deleted => 0
     );
 
-    return undef if !$entry;
+    return if !$entry;
 
     $entry->edit({
         title => $title,
         body  => $body,
     });
 
-    return $entry;
+    $entry;
 }
 
 sub remove_entry {
@@ -75,7 +81,7 @@ sub remove_entry {
         is_deleted => 0
     );
 
-    return undef if !$entry;
+    return if !$entry;
 
     $entry->soft_delete;
 }

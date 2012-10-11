@@ -36,7 +36,6 @@ my $other_entry_1 = $other_user->add_entry({
     body  => '完了しました',
 });
 
-
 subtest 'add' => sub {
     is $entry_1->title, $title_1;
     is $entry_1->body, $body_1;
@@ -46,13 +45,13 @@ subtest 'add' => sub {
 
 subtest 'list' => sub {
     is scalar(@$entries), 2;
-    is $entries->[1]->title, $title_2;
-    is $entries->[1]->body, $body_2;
+    is $entries->[0]->title, $title_2;
+    is $entries->[0]->body, $body_2;
 };
 
 subtest 'edit only title' => sub {
     my $edited_entry = $user->edit_entry({
-        entry_id => $entries->[1]->id,
+        entry_id => $entries->[0]->id,
         title    => 'Python',
     });
 
@@ -62,7 +61,7 @@ subtest 'edit only title' => sub {
 
 subtest 'edit only body' => sub {
     my $edited_entry = $user->edit_entry({
-        entry_id => $entries->[0]->id,
+        entry_id => $entries->[1]->id,
         body     => '日記のシステムを設計'
     });
 
@@ -72,7 +71,7 @@ subtest 'edit only body' => sub {
 
 subtest 'edit' => sub {
     my $edited_entry = $user->edit_entry({
-        entry_id => $entries->[0]->id,
+        entry_id => $entries->[1]->id,
         title    => '晩ご飯',
         body     => 'ラーメンを食べた'
     });

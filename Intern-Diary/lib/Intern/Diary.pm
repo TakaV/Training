@@ -14,12 +14,8 @@ __PACKAGE__->configure;
 sub user {
     my $self = shift;
 
-    if (my $name = 'takapiero') {
-        my $user = moco('User')->find( name => $name ) || moco('User')->create( name => $name );
-    }
-    else {
-        '';
-    }
+    my $name = 'takapiero';
+    moco('User')->find( name => $name ) || moco('User')->create( name => $name );
 }
 
 sub get_pager {
@@ -31,7 +27,7 @@ sub get_pager {
     $pager->entries_per_page($args->{per_page});
     $pager->current_page($args->{page});
 
-    return $pager;
+    $pager;
 }
 
 1;
