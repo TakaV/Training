@@ -1,6 +1,7 @@
+<body data-next-page="[% next_page | html %]">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://underscorejs.org/underscore-min.js"></script>
-<script id="next-page" src="/js/diary.js">[% next_page | html %]</script>
+<script src="/js/diary.js"></script>
 <div id="diary-list">
 [% IF entries.size %]
   [% FOR entry IN entries %]
@@ -16,3 +17,4 @@
     <a href="/diary.add">日記を書く</a>
   </p>
 </div>
+</body>
