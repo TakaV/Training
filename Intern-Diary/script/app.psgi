@@ -8,6 +8,7 @@ use lib 'lib';
 use UNIVERSAL::require;
 use Path::Class;
 use Plack::Builder;
+use Plack::Session;
 
 my $namespace = 'Intern::Diary';
 $namespace->use or die $@;
@@ -26,6 +27,7 @@ builder {
     }
 
     enable "Plack::Middleware::ReverseProxy";
+    enable 'Session';
 
     sub {
         my $env = shift;

@@ -11,63 +11,42 @@ __PACKAGE__->table('user');
 
 __PACKAGE__->utf8_columns(qw(name));
 
+# class
+sub find_by_id {
+    my ($self, $id) = @_;
+    $self->find( id => $id );
+}
+
+sub register {
+    my ($self, $name) = @_;
+
+    $self->create(
+        name          => $name,
+        tutorial_step => 0,
+    );
+}
+
+# instance
 sub entries {
     my ($self, $opts) = @_;
-
-    my $attrs = {
-        order => 'id DESC',
-    };
-
-    if ($opts) {
-        my $page  = $opts->{page} || 1;
-        my $limit = $opts->{limit} || 3;
-
-        $attrs->{limit}  = $limit;
-        $attrs->{offset} = ($page - 1) * $limit;
-    }
-
-    moco('Entry')->search(
-        where => {
-            user_id    => $self->id,
-            is_deleted => 0,
-        },
-        %$attrs
-    );
+    moco('Entry')->search_by_user_id($self->id, $opts);
 }
 
 sub add_entry {
     my ($self, $args) = @_;
-
-    my $title = $args->{title};
-    my $body  = $args->{body};
-
-    moco('Entry')->create(
-        user_id    => $self->id,
-        title      => $title,
-        body       => $body,
-        is_deleted => 0,
-    );
+    moco('Entry')->register($self->id, $args);
 }
 
 sub edit_entry {
-    my ($self, $args) = @_;
+    my ($self, $entry_id, $args) = @_;
 
-    my $entry_id = $args->{entry_id};
     my $title    = $args->{title};
     my $body     = $args->{body};
 
-    my $entry = moco('Entry')->find(
-        id         => $entry_id,
-        user_id    => $self->id,
-        is_deleted => 0
-    );
+    my $entry = moco('Entry')->find_by_id($entry_id);
+    return if !$entry || $self->id != $entry->user_id;
 
-    return if !$entry;
-
-    $entry->edit({
-        title => $title,
-        body  => $body,
-    });
+    $entry->edit($args);
 
     $entry;
 }
@@ -75,15 +54,20 @@ sub edit_entry {
 sub remove_entry {
     my ($self, $entry_id) = @_;
 
-    my $entry = moco('Entry')->find(
-        id         => $entry_id,
-        user_id    => $self->id,
-        is_deleted => 0
-    );
-
-    return if !$entry;
+    my $entry = moco('Entry')->find_by_id($entry_id);
+    return if !$entry || $self->id != $entry->user_id;
 
     $entry->soft_delete;
+}
+
+sub update_tutorial_step {
+    my ($self, $next_step) = @_;
+    $self->tutorial_step($next_step);
+}
+
+sub is_finished_tutorial {
+    my $self = shift;
+    $self->tutorial_step == 99;
 }
 
 1;

@@ -11,6 +11,56 @@ __PACKAGE__->table('entry');
 
 __PACKAGE__->utf8_columns(qw(title body));
 
+# class
+sub find_by_id {
+    my ($self, $id) = @_;
+
+    $self->find(
+        id         => $id,
+        is_deleted => 0
+    );
+}
+
+sub search_by_user_id {
+    my ($self, $user_id, $opts) = @_;
+
+    my $attrs = {
+        order => 'id DESC',
+    };
+
+    if ($opts) {
+        my $page  = $opts->{page} || 1;
+        my $limit = $opts->{limit} || 3;
+
+        $attrs->{order}  = $opts->{order};
+        $attrs->{limit}  = $limit;
+        $attrs->{offset} = ($page - 1) * $limit;
+    }
+
+    $self->search(
+        where => {
+            user_id    => $user_id,
+            is_deleted => 0,
+        },
+        %$attrs
+    );
+}
+
+sub register {
+    my ($self, $user_id, $args) = @_;
+
+    my $title = $args->{title};
+    my $body  = $args->{body};
+
+    $self->create(
+        user_id    => $user_id,
+        title      => $title,
+        body       => $body,
+        is_deleted => 0,
+    );
+}
+
+# instance
 sub user {
     my $self = shift;
     moco('User')->find( id => $self->user_id );

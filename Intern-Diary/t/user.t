@@ -50,9 +50,8 @@ subtest 'list' => sub {
 };
 
 subtest 'edit only title' => sub {
-    my $edited_entry = $user->edit_entry({
-        entry_id => $entries->[0]->id,
-        title    => 'Python',
+    my $edited_entry = $user->edit_entry($entries->[0]->id, {
+        title => 'Python',
     });
 
     is $edited_entry->title, 'Python';
@@ -60,9 +59,8 @@ subtest 'edit only title' => sub {
 };
 
 subtest 'edit only body' => sub {
-    my $edited_entry = $user->edit_entry({
-        entry_id => $entries->[1]->id,
-        body     => '日記のシステムを設計'
+    my $edited_entry = $user->edit_entry($entries->[1]->id, {
+        body => '日記のシステムを設計'
     });
 
     is $edited_entry->title, $entry_1->title;
@@ -70,10 +68,9 @@ subtest 'edit only body' => sub {
 };
 
 subtest 'edit' => sub {
-    my $edited_entry = $user->edit_entry({
-        entry_id => $entries->[1]->id,
-        title    => '晩ご飯',
-        body     => 'ラーメンを食べた'
+    my $edited_entry = $user->edit_entry($entries->[1]->id, {
+        title => '晩ご飯',
+        body  => 'ラーメンを食べた'
     });
 
     is $edited_entry->title, '晩ご飯';
@@ -97,9 +94,8 @@ subtest 'delete' => sub {
 };
 
 subtest 'edit other user entry' => sub {
-    my $edited_entry = $user->edit_entry({
-        entry_id => $other_entry_1->id,
-        body     => 'まだ完了してません'
+    my $edited_entry = $user->edit_entry($other_entry_1->id, {
+        body => 'まだ完了してません'
     });
 
     is $edited_entry, undef;

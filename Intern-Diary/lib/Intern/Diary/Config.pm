@@ -38,7 +38,7 @@ sub uri_filter {
         $uri->path('/diary');
         $uri->param( id => $1 );
     }
-    if ($path =~ m{^/api\.page/(\d+)$}) {
+    elsif ($path =~ m{^/api\.page/(\d+)$}) {
         $uri->path('/api.page');
         $uri->param( page_id => $1 );
     }

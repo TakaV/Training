@@ -8,26 +8,26 @@ use Intern::Diary::Engine -Base;
 sub default : Public {
     my ($self, $r) = @_;
 
-    if (my $user = $r->user) {
-        my $page     = $r->req->param('page') || 1;
-        my $per_page = 3;
+    my $user = $r->user || return;
 
-        my $total_entries = $user->entries;
+    my $page     = $r->req->param('page') || 1;
+    my $per_page = 3;
 
-        my $pager = $r->get_pager({
-            total    => scalar(@$total_entries),
-            per_page => $per_page,
-            page     => $page,
-        });
+    my $total_entries = $user->entries;
 
-        my $entries = [ $pager->splice($total_entries) ];
+    my $pager = $r->get_pager({
+        total    => scalar(@$total_entries),
+        per_page => $per_page,
+        page     => $page,
+    });
 
-        $r->stash->param(
-            entries   => $entries,
-            page      => $page,
-            next_page => (scalar(@$entries) == scalar(@$total_entries) ? 1 : 2),
-        );
-    }
+    my $entries = [ $pager->splice($total_entries) ];
+
+    $r->stash->param(
+        entries   => $entries,
+        page      => $page,
+        next_page => (scalar(@$entries) == scalar(@$total_entries) ? 1 : 2),
+    );
 }
 
 1;

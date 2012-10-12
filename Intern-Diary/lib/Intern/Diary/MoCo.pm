@@ -67,14 +67,16 @@ __PACKAGE__->add_trigger(
 sub moco {
     my $moco = join '::', __PACKAGE__, @_;
     $moco->require or die $@;
+
     return $moco;
 }
 
 sub now {
     my $dt = DateTime->now(
-        time_zone => 'UTC',
+        time_zone => 'Asia/Tokyo',
         formatter => 'DateTime::Format::MySQL',
     );
+
     return $dt;
 }
 
