@@ -11,22 +11,20 @@ __PACKAGE__->table('user');
 
 __PACKAGE__->utf8_columns(qw(name));
 
-# class
 sub find_by_id {
-    my ($self, $id) = @_;
-    $self->find( id => $id );
+    my ($class, $id) = @_;
+    $class->find( id => $id );
 }
 
 sub register {
-    my ($self, $name) = @_;
+    my ($class, $name) = @_;
 
-    $self->create(
+    $class->create(
         name          => $name,
         tutorial_step => 0,
     );
 }
 
-# instance
 sub entries {
     my ($self, $opts) = @_;
     moco('Entry')->search_by_user_id($self->id, $opts);

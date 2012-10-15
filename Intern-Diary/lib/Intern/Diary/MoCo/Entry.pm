@@ -11,18 +11,17 @@ __PACKAGE__->table('entry');
 
 __PACKAGE__->utf8_columns(qw(title body));
 
-# class
 sub find_by_id {
-    my ($self, $id) = @_;
+    my ($class, $id) = @_;
 
-    $self->find(
+    $class->find(
         id         => $id,
         is_deleted => 0
     );
 }
 
 sub search_by_user_id {
-    my ($self, $user_id, $opts) = @_;
+    my ($class, $user_id, $opts) = @_;
 
     my $attrs = {
         order => 'id DESC',
@@ -37,7 +36,7 @@ sub search_by_user_id {
         $attrs->{offset} = ($page - 1) * $limit;
     }
 
-    $self->search(
+    $class->search(
         where => {
             user_id    => $user_id,
             is_deleted => 0,
@@ -47,12 +46,12 @@ sub search_by_user_id {
 }
 
 sub register {
-    my ($self, $user_id, $args) = @_;
+    my ($class, $user_id, $args) = @_;
 
     my $title = $args->{title};
     my $body  = $args->{body};
 
-    $self->create(
+    $class->create(
         user_id    => $user_id,
         title      => $title,
         body       => $body,
@@ -60,10 +59,9 @@ sub register {
     );
 }
 
-# instance
 sub user {
     my $self = shift;
-    moco('User')->find( id => $self->user_id );
+    moco('User')->find_by_id($self->user_id);
 }
 
 sub edit {

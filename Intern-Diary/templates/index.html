@@ -13,6 +13,18 @@
 [% END %]
 </div>
 <div>
+[% IF next_page %]
+  <p>
+    <a href="/?page=[% next_page %]">次のページ</a>
+  </p>
+[% END %]
+[% IF previous_page %]
+  <p>
+    <a href="/?page=[% previous_page %]">前のページ</a>
+  </p>
+[% END %]
+</div>
+<div>
   <p>
     <a href="/diary.add">日記を書く</a>
   </p>

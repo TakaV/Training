@@ -24,9 +24,10 @@ sub default : Public {
     my $entries = [ $pager->splice($total_entries) ];
 
     $r->stash->param(
-        entries   => $entries,
-        page      => $page,
-        next_page => (scalar(@$entries) == scalar(@$total_entries) ? 1 : 2),
+        entries       => $entries,
+        page          => $page,
+        next_page     => $pager->next_page,
+        previous_page => $pager->previous_page,
     );
 }
 

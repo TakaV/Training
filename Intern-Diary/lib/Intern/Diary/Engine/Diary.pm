@@ -11,11 +11,13 @@ sub default : Public {
 
     my $user = $r->user || return;
 
-    my $id    = $r->req->uri->param('id');
-    my $entry = moco("Entry")->find(
-        id         => $id,
-        is_deleted => 0
-    );
+    my $id = $r->req->uri->param('id');
+
+    my $entry = moco("Entry")->find_by_id($id);
+
+    if (!$entry) {
+        $r->detach_404;
+    }
 
     $r->stash->param(
         entry => $entry,

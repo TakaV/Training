@@ -13,9 +13,8 @@ __PACKAGE__->table('tutorial_question');
 
 __PACKAGE__->utf8_columns(qw(title description));
 
-# class
 sub get_random {
-    my ($self, $opts) = @_;
+    my ($class, $opts) = @_;
 
     my $attrs = {
         order => 'id',
@@ -25,7 +24,7 @@ sub get_random {
         $attrs->{order} = $opts->{order}
     }
 
-    my $questions = $self->search(
+    my $questions = $class->search(
         where => {},
         %$attrs
     );

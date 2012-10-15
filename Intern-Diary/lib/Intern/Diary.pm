@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Data::Page;
+use HTTP::Status;
 use Plack::Session;
 
 use base qw/Ridge/;
@@ -64,6 +65,11 @@ sub get_pager {
 sub session {
     my $self = shift;
     Plack::Session->new($self->req->env);
+}
+
+sub detach_404 {
+    my $self = shift;
+    Ridge::Exception::RequestError->throw( code => RC_NOT_FOUND );
 }
 
 1;
