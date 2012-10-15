@@ -16,6 +16,11 @@ sub find_by_id {
     $class->find( id => $id );
 }
 
+sub find_by_name {
+    my ($class, $name) = @_;
+    $class->find( name => $name );
+}
+
 sub register {
     my ($class, $name) = @_;
 

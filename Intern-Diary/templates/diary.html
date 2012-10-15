@@ -4,8 +4,8 @@
   [% entry.created_at.strftime('%Y-%m-%d') | html %]
   [% IF r.user.name == entry.user.name %]
   <p>
-    <a href="/diary.edit?id=[% entry.id | html %]">編集</a>
-    <a href="/diary.remove?id=[% entry.id | html %]">削除</a>
+    <a href="/diary.edit?entry_id=[% entry.id | html %]">編集</a>
+    <a href="/diary.remove?entry_id=[% entry.id | html %]">削除</a>
   </p>
   [% END %]
 </div>

@@ -51,10 +51,8 @@ sub _add_post {
 sub edit : Public {
     my ($self, $r) = @_;
 
-    my $user = $r->user || return;
-
-    my $id    = $r->req->param('id');
-    my $entry = $id ? moco("Entry")->find_by_id($id) : undef;
+    my $user  = $r->user || return;
+    my $entry = $self->_validate_entry($r, $user);
 
     $r->stash->param(
         entry => $entry,
@@ -86,10 +84,8 @@ sub _edit_post {
 sub remove : Public {
     my ($self, $r) = @_;
 
-    my $user = $r->user || return;
-
-    my $id    = $r->req->param('id');
-    my $entry = $id ? moco("Entry")->find( id => $id ) : undef;
+    my $user  = $r->user || return;
+    my $entry = $self->_validate_entry($r, $user);
 
     $r->stash->param(
         entry => $entry,
@@ -110,6 +106,19 @@ sub _remove_post {
     $user->remove_entry($entry_id);
 
     $r->res->redirect('/');
+}
+
+sub _validate_entry {
+    my ($self, $r, $user) = @_;
+
+    my $id    = $r->req->param('entry_id');
+    my $entry = moco("Entry")->find_by_id($id);
+
+    if (!$entry || $entry->user_id != $user->id) {
+        $r->detach_404;
+    }
+
+    $entry;
 }
 
 1;

@@ -21,7 +21,7 @@ sub user {
     my $self = shift;
 
     my $user_id = $self->session->get(USER_ID);
-    my $user    = moco('User')->find( id => $user_id );
+    my $user    = moco('User')->find_by_id($user_id);
 
     if ($user) {
         if ($user->is_finished_tutorial || $self->req->request_uri eq '/tutorial') {
@@ -67,9 +67,16 @@ sub session {
     Plack::Session->new($self->req->env);
 }
 
+sub detach_400 {
+    Ridge::Exception::RequestError->throw( code => RC_BAD_REQUEST );
+}
+
 sub detach_404 {
-    my $self = shift;
     Ridge::Exception::RequestError->throw( code => RC_NOT_FOUND );
+}
+
+sub detach_405 {
+    Ridge::Exception::RequestError->throw( code => RC_METHOD_NOT_ALLOWED );
 }
 
 1;

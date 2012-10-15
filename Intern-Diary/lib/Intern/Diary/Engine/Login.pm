@@ -24,7 +24,7 @@ sub _post {
     my ($self, $r) = @_;
 
     my $name = $r->req->param('name');
-    my $user = moco('User')->find( name => $name );
+    my $user = moco('User')->find_by_name($name);
 
     $r->session->set(USER_ID, $user->id);
 

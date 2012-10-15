@@ -59,10 +59,9 @@ sub edit {
     my $entry_id       = input_entry_id();
     my ($title, $body) = input_diary();
 
-    my $entry = $user->edit_entry({
-        entry_id => $entry_id,
-        title    => $title,
-        body     => $body
+    my $entry = $user->edit_entry($entry_id, {
+        title => $title,
+        body  => $body
     });
 
     input_result($entry);
@@ -82,7 +81,13 @@ sub delete {
 
 sub get_user {
     my ($user_id, $name) = @_;
-    moco('User')->find(id => $user_id) || moco('User')->create(id => $user_id, name => $name);
+
+    moco('User')->find_by_id($user_id)
+        || moco('User')->create(
+            id            => $user_id,
+            name          => $name,
+            tutorial_step => 99
+        );
 }
 
 sub get_list {
